@@ -16,6 +16,8 @@ import type { StoryAgeGroup } from "@/utils/story-details/types/story-age";
 import type { StoryType } from "@/utils/story-details/types/story-type";
 import { writeFile } from "node:fs/promises";
 // import { ID, storage } from "./appwrite";
+import { put } from "@vercel/blob";
+
 import axios from "axios";
 
 export async function generateStory(storyPrompt: string) {
@@ -83,8 +85,7 @@ export async function generateStoryImage(prompt: string) {
     num_inference_steps: 4,
   };
 
-  // @ts-ignore
-  // @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
   const [output] = await replicate.run("black-forest-labs/flux-schnell", {
     input: input,
   });
@@ -93,6 +94,22 @@ export async function generateStoryImage(prompt: string) {
   convertImageToBase64(output?.url().href);
 }
 
+// export async function uploadImageToStorage(imageUrl: string) {
+//   const base64 =
+//     "data:image/png;base64," + (await convertImageToBase64(imageUrl));
+
+//   const filename = `/ai-story/${Date.now()}.png`;
+//   const file = new File([Buffer.from(base64, "base64")], filename, {
+//     type: "image/png",
+//   });
+
+//   const result = await put(file, {
+//     access: "public",
+//     token: process.env.BLOB_READ_WRITE_TOKEN,
+//   });
+
+//   return result;
+// }
 // export async function uploadImageToStorage(imageUrl: string) {
 //   const base64 =
 //     "data:image/png;base64," + (await convertImageToBase64(imageUrl));
