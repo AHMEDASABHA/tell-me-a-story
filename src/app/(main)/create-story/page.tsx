@@ -17,7 +17,7 @@ export default function CreateStory() {
 
   async function handleGeneratingStory() {
     setLoading(true);
-    let storyPrompt = AI_PROMPT.replace("{ageGroup}", storyDetails.ageGroup)
+    const storyPrompt = AI_PROMPT.replace("{ageGroup}", storyDetails.ageGroup)
       .replace("{storyType}", storyDetails.storyType)
       .replace("{storyImageStyle}", storyDetails.imageStyle)
       .replace("{storySubject}", storyDetails.storySubject);

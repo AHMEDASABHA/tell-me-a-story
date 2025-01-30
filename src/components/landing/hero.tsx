@@ -14,7 +14,7 @@ export function Hero() {
           </p>
 
           <p className="font-light text-2xl mb-10">
-            Create fun and personalized stories that bring your child's
+            Create fun and personalized stories that bring your child&apos;s
             adventures to life and spark their passion for reading. It only
             takes a few seconds.
           </p>

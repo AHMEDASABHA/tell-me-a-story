@@ -15,7 +15,7 @@ import type { StoryImageStyle } from "@/utils/story-details/types/image-type";
 import type { StoryAgeGroup } from "@/utils/story-details/types/story-age";
 import type { StoryType } from "@/utils/story-details/types/story-type";
 import { writeFile } from "node:fs/promises";
-import { ID, storage } from "./appwrite";
+// import { ID, storage } from "./appwrite";
 import axios from "axios";
 
 export async function generateStory(storyPrompt: string) {
@@ -84,6 +84,7 @@ export async function generateStoryImage(prompt: string) {
   };
 
   // @ts-ignore
+  // @typescript-eslint/ban-ts-comment
   const [output] = await replicate.run("black-forest-labs/flux-schnell", {
     input: input,
   });
