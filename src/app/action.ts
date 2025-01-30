@@ -85,13 +85,15 @@ export async function generateStoryImage(prompt: string) {
     num_inference_steps: 4,
   };
 
-  // @ts-expect-error
-  const [output] = await replicate.run("black-forest-labs/flux-schnell", {
-    input: input,
-  });
-
-  console.log(output?.url().href);
-  convertImageToBase64(output?.url().href);
+  try {
+    const [output]:any = await replicate.run("black-forest-labs/flux-schnell", {
+      input: input,
+    });
+    console.log(output?.url().href);
+    convertImageToBase64(output?.url().href);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 // export async function uploadImageToStorage(imageUrl: string) {
