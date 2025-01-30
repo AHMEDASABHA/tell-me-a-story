@@ -6,22 +6,50 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@ai-sdk/google": "^1.1.6",
+    "@clerk/nextjs": "^6.10.3",
+    "@google/generative-ai": "^0.21.0",
+    "@heroui/button": "2.2.10",
+    "@heroui/input": "^2.4.10",
+    "@heroui/navbar": "^2.2.9",
+    "@heroui/react": "^2.6.14",
+    "@heroui/system": "2.4.7",
+    "@heroui/theme": "2.4.6",
+    "@neondatabase/serverless": "^0.10.4",
+    "ai": "^4.1.11",
+    "appwrite": "14.0.1",
+    "axios": "^1.7.9",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.4.7",
+    "drizzle-orm": "^0.39.0",
+    "formdata-node": "^6.0.3",
+    "framer-motion": "^11.17.0",
+    "next": "15.1.4",
+    "nuqs": "^2.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.1.4"
+    "replicate": "^1.0.1",
+    "tailwind-merge": "^2.6.0",
+    "uuid": "^11.0.5",
+    "uuid4": "^2.0.3",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "drizzle-kit": "^0.30.3",
     "eslint": "^9",
     "eslint-config-next": "15.1.4",
-    "@eslint/eslintrc": "^3"
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5"
   }
 }
