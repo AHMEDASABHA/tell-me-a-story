@@ -18,7 +18,6 @@ import ImageKit from "imagekit";
 import { eq, desc } from "drizzle-orm";
 
 import axios from "axios";
-import { UserResource } from "@clerk/types";
 
 const imagekit = new ImageKit({
   publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY || "",
