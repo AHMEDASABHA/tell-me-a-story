@@ -43,7 +43,7 @@ export default function FlipBook({ story }: { story: StoryWrapper }) {
 
   return (
     <div className="relative w-full max-w-5xl mx-auto px-4">
-      {/* @ts-expect-error */}
+      {/* @ts-expect-error: HTMLFlipBook does not have TypeScript definitions */}
       <HTMLFlipBook
         ref={book}
         showCover={true}

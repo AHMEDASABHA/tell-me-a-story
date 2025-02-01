@@ -21,7 +21,7 @@ export const UserStoriesList = () => {
       setUserStories(userStories as StoryWrapper[]);
       setIsLoading(false);
     };
-    user && fetchUserStories();
+    if (user) fetchUserStories();
   }, [user]);
 
   return (
