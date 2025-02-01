@@ -5,10 +5,11 @@ import { HeroUIProvider } from "@heroui/system";
 import { StoryDetailsProvider } from "../utils/story-details/state/story-details-context-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { ToastContainer, toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { User } from "@/utils/user/types/user";
 import { addUserToDatabaseIfNotExists } from "./action";
 import { UserDetailsContext } from "@/utils/user/state/user-details.context";
+import CustomLoader from "@/components/create-story/custom-loader";
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   const { user } = useUser();
@@ -29,19 +30,21 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
   }, [user]);
 
   return (
-    <UserDetailsContext value={{ userData, setUserData }}>
-      <NuqsAdapter>
-        <PayPalScriptProvider
-          options={{
-            clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? "test",
-          }}
-        >
-          <HeroUIProvider>
-            <StoryDetailsProvider>{children}</StoryDetailsProvider>
-            <ToastContainer />
-          </HeroUIProvider>
-        </PayPalScriptProvider>
-      </NuqsAdapter>
-    </UserDetailsContext>
+    <Suspense fallback={<CustomLoader loadingText="Loading..." />}>
+      <UserDetailsContext value={{ userData, setUserData }}>
+        <NuqsAdapter>
+          <PayPalScriptProvider
+            options={{
+              clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID ?? "test",
+            }}
+          >
+            <HeroUIProvider>
+              <StoryDetailsProvider>{children}</StoryDetailsProvider>
+              <ToastContainer />
+            </HeroUIProvider>
+          </PayPalScriptProvider>
+        </NuqsAdapter>
+      </UserDetailsContext>
+    </Suspense>
   );
 };
