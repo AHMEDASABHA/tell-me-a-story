@@ -23,6 +23,7 @@
     "@heroui/theme": "2.4.6",
     "@neondatabase/serverless": "^0.10.4",
     "@paypal/react-paypal-js": "^8.8.1",
+    "@tailwindcss/postcss": "^4.0.3",
     "ai": "^4.1.16",
     "axios": "^1.7.9",
     "clsx": "^2.1.1",
