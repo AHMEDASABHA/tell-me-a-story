@@ -1,21 +1,40 @@
 "use client";
-import { generateStory, generateStoryImage, saveInDB } from "@/app/action";
+import {
+  generateStory,
+  generateStoryImage,
+  saveInDB,
+  updateUserCredits,
+} from "@/app/action";
 import CustomLoader from "@/components/create-story/custom-loader";
 import { StoryAgeGroup } from "@/components/create-story/story-age-group";
 import { StoryImageStyle } from "@/components/create-story/story-image-style";
 import { StorySubjectInput } from "@/components/create-story/story-subject";
 import StoryType from "@/components/create-story/story-type";
 import { AI_PROMPT } from "@/utils/constants";
-import type { Story } from "@/utils/story-details/schema/story-schema";
 import { StoryDetailsContext } from "@/utils/story-details/state/story-details-context-provider";
+import { useUser } from "@clerk/nextjs";
 import { Button } from "@heroui/react";
 import { use, useState } from "react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { UserDetailsContext } from "@/utils/user/state/user-details.context";
 
 export default function CreateStory() {
   const { storyDetails } = use(StoryDetailsContext);
   const [loading, setLoading] = useState(false);
+  const { user } = useUser();
+  const router = useRouter();
+  const { userData, setUserData } = use(UserDetailsContext);
+
+  const notify = (msg: string) => toast(msg);
+  const notifyError = (msg: string) => toast.error(msg);
 
   async function handleGeneratingStory() {
+    if (!userData) return;
+    if (userData?.credits === 0) {
+      notifyError("You have no credits left");
+      return;
+    }
     setLoading(true);
     const storyPrompt = AI_PROMPT.replace("{ageGroup}", storyDetails.ageGroup)
       .replace("{storyType}", storyDetails.storyType)
@@ -28,11 +47,35 @@ export default function CreateStory() {
       in bold text for book cover, ${story?.coverImage.prompt}
       `;
       const storyCoverImage = await generateStoryImage(storyCoverPrompt);
-      // const result = await saveInDB(story, storyDetails, storyCoverImage);
-      // console.log(result);
+
+      const result = await saveInDB(
+        story!,
+        storyDetails,
+        storyCoverImage?.imageUrl as string,
+        {
+          userEmail: user?.primaryEmailAddress?.emailAddress ?? "",
+          userName: user?.fullName ?? "",
+          userImage: user?.imageUrl ?? "",
+        }
+      );
+      console.log(result);
+      await updateUserCredits(
+        user?.primaryEmailAddress?.emailAddress ?? "",
+        Number(userData?.credits) - 1
+      );
+      setUserData((prev) => {
+        if (!prev) return null;
+        return {
+          ...prev,
+          credits: Number(prev?.credits) - 1,
+        };
+      });
+      notify("Story generated successfully");
+      router.replace(`/view-story/${result?.[0].storyId}`);
       setLoading(false);
     } catch (e) {
       console.log(e);
+      notifyError("Something went wrong");
       setLoading(false);
     }
   }
@@ -53,7 +96,7 @@ export default function CreateStory() {
         <StoryAgeGroup />
         <StoryImageStyle />
       </div>
-      <div className="flex justify-end">
+      <div className="flex flex-col justify-end items-end gap-4">
         <Button
           color="primary"
           className="p-10 text-2xl"
@@ -62,8 +105,13 @@ export default function CreateStory() {
         >
           {loading ? "Generating..." : "Generate story"}
         </Button>
+        <span className="text-primary text-sm mt-0">
+          1 credit will be deducted from your account
+        </span>
       </div>
-      {loading && <CustomLoader />}
+      {loading && (
+        <CustomLoader loadingText="Please wait... Generating story..." />
+      )}
     </div>
   );
 }

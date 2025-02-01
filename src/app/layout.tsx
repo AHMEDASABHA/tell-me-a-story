@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Modern_Antiqua } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./provider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const modernAntiqua = Modern_Antiqua({
   weight: "400",
@@ -20,10 +21,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${modernAntiqua.variable} antialiased h-screen`}>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={`${modernAntiqua.variable} antialiased h-screen`}>
+          <Providers>{children}</Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

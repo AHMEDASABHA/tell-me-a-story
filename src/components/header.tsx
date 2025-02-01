@@ -30,7 +30,7 @@ export function Header() {
     },
     {
       label: "Explore stories",
-      href: "/create-story",
+      href: "/explore",
     },
     {
       label: "Contact Us",

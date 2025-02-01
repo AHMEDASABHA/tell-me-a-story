@@ -19,3 +19,5 @@ export const storySchema = z.object({
 });
 
 export type Story = z.infer<typeof storySchema>;
+
+export type StoryChapter = Story["chapters"][number];

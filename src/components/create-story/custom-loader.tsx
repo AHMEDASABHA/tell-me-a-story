@@ -5,7 +5,13 @@ import { Modal, ModalContent, ModalBody, useDisclosure } from "@heroui/react";
 import Image from "next/image";
 import loader from "@/assets/images/loader.gif";
 
-export default function CustomLoader() {
+export default function CustomLoader(
+  {
+    loadingText
+  }:{
+    loadingText:string
+  }
+) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   useEffect(() => {
@@ -25,7 +31,7 @@ export default function CustomLoader() {
                   className="w-60 h-60"
                 />
                 <p className="text-2xl font-bold text-center text-primary">
-                  Please wait... Generating story...
+                  {loadingText}
                 </p>
             </ModalBody>
           </>
