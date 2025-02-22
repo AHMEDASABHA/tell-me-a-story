@@ -1,27 +1,49 @@
-# Tell Me a Story - Project Overview
+# Tell Me a Story
 
-## Idea of the App
+## Project Overview
 
 "Tell Me a Story" is a Next.js application designed to generate and explore AI-generated stories for children. Users can create personalized stories by selecting various options such as story type, age group, and image style. The app leverages AI to craft unique narratives and illustrations, providing an engaging storytelling experience.
 
-## Getting Started
-
-### Prerequisites
+## Prerequisites
 
 Before running the application, ensure you have the following environment variables set up in a `.env.local` file:
 
+- `NEXT_PUBLIC_DATABASE_URL`: Your database connection URL.
+- `NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY`: Your ImageKit public key.
+- `NEXT_PUBLIC_IMAGEKIT_PRIVATE_KEY`: Your ImageKit private key.
+- `NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT`: Your ImageKit URL endpoint.
+- `REPLICATE_API_TOKEN`: Your Replicate API token.
+- `NEXT_PUBLIC_PAYPAL_CLIENT_ID`: Your PayPal client ID.
+
+## Getting Started
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-First, run the development server:
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/tell-me-a-story.git
+   cd tell-me-a-story
+   ```
+
+2. Install the dependencies:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Set up your environment variables in a `.env.local` file as described in the Prerequisites section.
+
+### Running the Development Server
+
+To start the development server, run:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -55,6 +77,17 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
    startLine: 9
    endLine: 40
    ```
+
+## Scripts
+
+The following scripts are available in the `package.json`:
+
+- `dev`: Starts the development server.
+- `build`: Builds the application for production.
+- `start`: Starts the application in production mode.
+- `lint`: Runs ESLint to check for code quality issues.
+- `db:push`: Pushes the database schema using Drizzle ORM.
+- `db:studio`: Opens the Drizzle ORM studio for database management.
 
 ## Learn More
 
